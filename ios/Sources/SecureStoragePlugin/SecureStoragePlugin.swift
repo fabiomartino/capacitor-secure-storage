@@ -2,8 +2,27 @@ import Foundation
 import Capacitor
 import KeychainSwift
 
-@objc(SecureStorage)
-public class SecureStorage: CAPPlugin {
+@objc(SecureStoragePlugin)
+public class SecureStoragePlugin: CAPPlugin, CAPBridgedPlugin {
+
+  /// The unique identifier for the plugin.
+  public let identifier = "SecureStoragePlugin"
+
+  /// The name used to reference this plugin in JavaScript.
+  public let jsName = "SecureStorage"
+
+  public let pluginMethods: [CAPPluginMethod] = [
+    CAPPluginMethod(name: "setSynchronizeKeychain", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "internalSetItem", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "internalGetItem", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "internalRemoveItem", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "clearItemsWithPrefix", returnType: CAPPluginReturnPromise),
+    CAPPluginMethod(name: "getPrefixedKeys", returnType: CAPPluginReturnPromise)
+  ]
+
+  /// An instance of the implementation class that contains the plugin's core functionality.
+  private let implementation = SecureStorage()
+
   let kKeyOption = "prefixedKey"
   let kDataOption = "data"
   let kSyncOption = "sync"
@@ -175,3 +194,4 @@ public class SecureStorage: CAPPlugin {
     }
   }
 }
+
